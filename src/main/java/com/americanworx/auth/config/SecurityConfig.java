@@ -50,7 +50,7 @@ public class SecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .authorizeHttpRequests(
                         authorize -> authorize
-                                .requestMatchers("/login").permitAll()
+                                .requestMatchers("/login", "/saveUser").permitAll()
                                 .anyRequest().authenticated())
 
                 .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class);

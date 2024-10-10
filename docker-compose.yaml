@@ -6,6 +6,8 @@ services:
       - auth
     ports:
       - 3306:3306
+    expose:
+      - 3306
     environment:
       MYSQL_DATABASE: users
       MYSQL_ROOT_PASSWORD: admin

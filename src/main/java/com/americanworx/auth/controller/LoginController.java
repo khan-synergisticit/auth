@@ -75,7 +75,7 @@ public class LoginController {
     }
 
     @PostMapping("/saveUser")
-    public ResponseEntity<?> saveUser(@ModelAttribute UserDtls user, @RequestParam("img") MultipartFile file)
+    public ResponseEntity<?> saveUser(@ModelAttribute UserDtls user)
             throws IOException {
 
         Boolean existsEmail = userService.existsEmail(user.getEmail());
@@ -83,25 +83,10 @@ public class LoginController {
         if (existsEmail) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
         } else {
-            String imageName = file.isEmpty() ? "default.jpg" : file.getOriginalFilename();
-            user.setProfileImage(imageName);
             UserDtls saveUser = userService.saveUser(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(saveUser);
 
-            if (!ObjectUtils.isEmpty(saveUser)) {
-                if (!file.isEmpty()) {
-                    File saveFile = new ClassPathResource("static/img").getFile();
 
-                    Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "profile_img" + File.separator
-                            + file.getOriginalFilename());
-
-//					System.out.println(path);
-                    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-                }
-                return ResponseEntity.status(HttpStatus.CREATED).body(saveUser);
-
-            } else {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Something went wrong");
-            }
         }
 
 
