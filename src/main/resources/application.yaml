@@ -1,0 +1,28 @@
+server:
+  port: 8050
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/users
+    username: root
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: auth
+  security:
+    oauth2:
+      authorization-server:
+        client:
+          client-1:
+            registration:
+              client-id: client
+              client-secret: "{noop}secret"
+              client-authentication-methods: client_secret_basic
+              authorization-grant-types: client_credentials
