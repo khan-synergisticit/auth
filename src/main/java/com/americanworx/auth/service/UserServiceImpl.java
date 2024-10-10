@@ -35,9 +35,10 @@ public class UserServiceImpl implements UserService {
         user.setIsEnable(true);
         user.setAccountNonLocked(true);
         user.setFailedAttempt(0);
-
+        System.out.println("---------1");
         String encodePassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodePassword);
+        System.out.println("---------2 " + user.getPassword());
         UserDtls saveUser = userRepository.save(user);
         return saveUser;
     }

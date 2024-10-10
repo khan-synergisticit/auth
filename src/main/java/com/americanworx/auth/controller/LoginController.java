@@ -36,6 +36,8 @@ public class LoginController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+
+
     @Autowired
     private UserService userService;
     private final SecurityContextRepository securityContextRepository =
