@@ -75,8 +75,7 @@ public class LoginController {
     }
 
     @PostMapping("/saveUser")
-    public ResponseEntity<?> saveUser(@ModelAttribute UserDtls user)
-            throws IOException {
+    public ResponseEntity<?> saveUser(@ModelAttribute UserDtls user){
 
         Boolean existsEmail = userService.existsEmail(user.getEmail());
 
