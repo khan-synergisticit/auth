@@ -17,7 +17,7 @@ services:
     build:
       context: .
     ports:
-      - "8050:8050"
+      - "8040:8040"
     networks:
       - auth
     environment:

@@ -30,14 +30,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDtls saveUser(UserDtls user) {
-        user.setRole("ROLE_USER");
+        if(user.getRole() == null) {
+            user.setRole("ROLE_USER");
+        }
         user.setIsEnable(true);
         user.setAccountNonLocked(true);
         user.setFailedAttempt(0);
-        System.out.println("---------1");
         String encodePassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodePassword);
-        System.out.println("---------2 " + user.getPassword());
         UserDtls saveUser = userRepository.save(user);
         return saveUser;
     }

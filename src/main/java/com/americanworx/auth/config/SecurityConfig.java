@@ -44,7 +44,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers("/login", "/saveUser").permitAll()
-                                .anyRequest().authenticated())
+                              )
 
                 .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class);
 

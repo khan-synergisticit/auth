@@ -70,17 +70,13 @@ public class LoginController {
     }
 
     @PostMapping("/saveUser")
-    public ResponseEntity<?> saveUser(@ModelAttribute UserDtls user){
-
+    public ResponseEntity<?> saveUser(@RequestBody UserDtls user){
         Boolean existsEmail = userService.existsEmail(user.getEmail());
-
         if (existsEmail) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
         } else {
             UserDtls saveUser = userService.saveUser(user);
             return ResponseEntity.status(HttpStatus.CREATED).body(saveUser);
-
-
         }
 
 

@@ -9,6 +9,6 @@ RUN mvn -f /usr/app/pom.xml clean install -DskipTests -U
 # RUN mvn -f /usr/app/pom.xml clean package
 FROM openjdk:17
 COPY --from=build /usr/app/target/auth-0.0.1-SNAPSHOT.jar .
-EXPOSE 8050
+EXPOSE 8040
 #ENTRYPOINT ["java","-jar","userscrud-0.0.1-SNAPSHOT.jar"]
 ENTRYPOINT ["nohup", "java","-jar","auth-0.0.1-SNAPSHOT.jar", "&"]
