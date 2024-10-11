@@ -5,6 +5,7 @@ import com.americanworx.auth.config.jwt.JwtProvider;
 import com.americanworx.auth.domain.AuthResponse;
 import com.americanworx.auth.domain.UserDtls;
 import com.americanworx.auth.service.UserService;
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -43,11 +44,11 @@ public class LoginController {
 //    }
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<AuthResponse> login(@RequestBody JsonNode node, HttpServletRequest request, HttpServletResponse response) {
 
-        System.out.println("--------------------------- " + loginRequest.toString());
+        System.out.println("--------------------------- " + node.toString());
         Authentication authenticationRequest =
-                UsernamePasswordAuthenticationToken.unauthenticated(loginRequest.username(), loginRequest.password());
+                UsernamePasswordAuthenticationToken.unauthenticated(node.get("username").asText(), node.get("password").asText());
         Authentication authenticationResponse =
                 this.authenticationManager.authenticate(authenticationRequest);
 
