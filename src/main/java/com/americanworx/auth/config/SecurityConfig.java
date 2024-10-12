@@ -85,7 +85,7 @@ public class SecurityConfig {
                 .clientId("shopping")
                 .clientSecret("{noop}donkey")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .redirectUri("http://192.168.1.75:8040/login/oauth2/code/shopping")
                 .postLogoutRedirectUri("http://192.168.1.75:8040/")
