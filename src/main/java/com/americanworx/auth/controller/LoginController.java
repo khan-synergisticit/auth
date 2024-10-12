@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@CrossOrigin(origins = "http://192.168.1.76:8090/")
+//@CrossOrigin(origins = "http://192.168.1.76:8090/")
 public class LoginController {
 
     @Autowired
