@@ -1,7 +1,7 @@
 package com.americanworx.auth.controller;
 
 
-import com.americanworx.auth.config.jwt.JwtProvider;
+
 import com.americanworx.auth.domain.AuthResponse;
 import com.americanworx.auth.domain.UserDtls;
 import com.americanworx.auth.service.UserService;
@@ -56,14 +56,13 @@ public class LoginController {
         SecurityContextHolder.setContext(context);
 
         securityContextRepository.saveContext(context, request, response);
-        String token = JwtProvider.generateToken(authenticationResponse);
 
 
 
         AuthResponse authResponse = new AuthResponse();
         authResponse.setAuthenticationResponse(authenticationResponse);
         authResponse.setMessage("Login success");
-        authResponse.setJwt(token);
+
         authResponse.setStatus(true);
 
         return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
