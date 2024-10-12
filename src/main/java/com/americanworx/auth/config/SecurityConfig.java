@@ -21,6 +21,8 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 //import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -71,8 +73,11 @@ public class SecurityConfig {
     @Bean
 //    @Order(2)
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((authorizeRequests) -> authorizeRequests
-                .requestMatchers(CorsConfiguration.ALL).permitAll()
+        http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(AbstractHttpConfigurer::disable)
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+                .authorizeHttpRequests((authorizeRequests) -> authorizeRequests
                 .requestMatchers("/saveUser", "/login").permitAll()
                 .anyRequest().authenticated()
         ).addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class);;
