@@ -6,6 +6,8 @@ import com.americanworx.auth.config.jwt.JwtProvider;
 import com.americanworx.auth.domain.AuthResponse;
 import com.americanworx.auth.domain.UserDtls;
 import com.americanworx.auth.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -45,7 +47,7 @@ public class LoginController {
     }
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
 
         System.out.println("--------------------------- " + loginRequest.toString());
         Authentication authenticationRequest =
@@ -67,8 +69,9 @@ public class LoginController {
         authResponse.setMessage("Login success");
 
         authResponse.setStatus(true);
+        ObjectMapper mapper = new ObjectMapper();
 
-        return new ResponseEntity<>(token1, HttpStatus.OK);
+        return new ResponseEntity<>(mapper.writeValueAsString(token1), HttpStatus.OK);
     }
 
 
