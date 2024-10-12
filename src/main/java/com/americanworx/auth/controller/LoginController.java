@@ -2,6 +2,7 @@ package com.americanworx.auth.controller;
 
 
 
+import com.americanworx.auth.config.jwt.JwtProvider;
 import com.americanworx.auth.domain.AuthResponse;
 import com.americanworx.auth.domain.UserDtls;
 import com.americanworx.auth.service.UserService;
@@ -11,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+//import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,9 +39,9 @@ public class LoginController {
     private final SecurityContextRepository securityContextRepository =
             new HttpSessionSecurityContextRepository();
 
-//    public LoginController(AuthenticationManager authenticationManager) {
-//        this.authenticationManager = authenticationManager;
-//    }
+    public LoginController(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
 
     @PostMapping(value = "/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
@@ -57,10 +58,11 @@ public class LoginController {
 
         securityContextRepository.saveContext(context, request, response);
 
-
-
+        Authentication token = new UsernamePasswordAuthenticationToken(authenticationRequest, authenticationResponse);
+        String token1 = JwtProvider.generateToken(authenticationResponse);
         AuthResponse authResponse = new AuthResponse();
-        authResponse.setAuthenticationResponse(authenticationResponse);
+        authResponse.setAuthenticationResponse(token);
+        authResponse.setJwt(token1);
         authResponse.setMessage("Login success");
 
         authResponse.setStatus(true);
