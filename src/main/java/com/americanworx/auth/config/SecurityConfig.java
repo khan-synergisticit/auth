@@ -88,7 +88,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(Customizer.withDefaults())
-                .logout(Customizer.withDefaults());
+                .logout(logout -> logout.logoutSuccessUrl("/login?logout").permitAll());
 
         return http.build();
     }
