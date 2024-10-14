@@ -104,7 +104,7 @@ public class SecurityConfig {
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .redirectUri("http://192.168.1.110:8090/shopping/login/oauth2/code/shopping")
-                .postLogoutRedirectUri("http://192.168.1.110:8090/shopping/logout")
+                .postLogoutRedirectUri("http://192.168.1.110:8090/shopping")
 //                .redirectUri("http://127.0.0.1:8090/shopping/login/oauth2/code/shopping")
 //                .postLogoutRedirectUri("http://127.0.0.1:8090/shopping/logout")
                 .scope(OidcScopes.OPENID)
