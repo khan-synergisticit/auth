@@ -87,7 +87,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults());
+                .formLogin(Customizer.withDefaults())
+                .logout(Customizer.withDefaults());
 
         return http.build();
     }
@@ -166,7 +167,9 @@ public class SecurityConfig {
 //    private AuthEntryPointJwt unauthorizedHandler;
     @Bean
     PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        System.out.println(passwordEncoder.encode("123456"));
+        return passwordEncoder;
     }
 
 //    @Bean
