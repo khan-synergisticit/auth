@@ -72,6 +72,7 @@ public class SecurityConfig {
         http
                 .exceptionHandling((exception) -> exception.defaultAuthenticationEntryPointFor(
                 new LoginUrlAuthenticationEntryPoint("/login"),
+
                 new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
         ))
                .oauth2ResourceServer(jwk-> jwk.jwt(Customizer.withDefaults()));
@@ -88,7 +89,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(Customizer.withDefaults())
-                .logout(logout -> logout.logoutSuccessUrl("/login?logout").permitAll().clearAuthentication(true).deleteCookies());
+                .logout(logout -> logout.logoutSuccessUrl("/").permitAll().clearAuthentication(true).deleteCookies());
 
         return http.build();
     }
@@ -105,6 +106,7 @@ public class SecurityConfig {
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .redirectUri("http://192.168.1.110:8090/shopping/login/oauth2/code/shopping")
                 .postLogoutRedirectUri("http://192.168.1.110:8090/shopping/logout")
+
 //                .redirectUri("http://127.0.0.1:8090/shopping/login/oauth2/code/shopping")
 //                .postLogoutRedirectUri("http://127.0.0.1:8090/shopping/logout")
                 .scope(OidcScopes.OPENID)
