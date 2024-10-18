@@ -169,9 +169,8 @@ public class SecurityConfig {
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-                .redirectUri("http://192.168.1.110:8090/login/oauth2/code/shopping")
-//                .redirectUri("http://127.0.0.1:8080/index.html")
-                .postLogoutRedirectUri("http://192.168.1.110:8090/")
+                .redirectUri( Constants.AUTH_CLIENT_URL + ":8090/login/oauth2/code/shopping")
+                .postLogoutRedirectUri( Constants.AUTH_CLIENT_URL + ":8090/")
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
                 .scope(OidcScopes.EMAIL)
@@ -211,7 +210,7 @@ public class SecurityConfig {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration ccfg = new CorsConfiguration();
-                ccfg.setAllowedOrigins(List.of("http://127.0.0.1:8090/", "http://127.0.0.1:8080/"));
+                ccfg.setAllowedOrigins(List.of(Constants.AUTH_CLIENT_URL +":8090/"));
                 ccfg.setAllowedMethods(Collections.singletonList("*"));
                 ccfg.setAllowCredentials(true);
                 ccfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
