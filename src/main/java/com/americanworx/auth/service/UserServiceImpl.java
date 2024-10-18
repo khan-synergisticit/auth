@@ -4,20 +4,11 @@ package com.americanworx.auth.service;
 import com.americanworx.auth.domain.UserDtls;
 import com.americanworx.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,6 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDtls saveUser(UserDtls user) {
+        passwordEncoder = new BCryptPasswordEncoder();
         if(user.getRole() == null) {
             user.setRole("ROLE_USER");
         }

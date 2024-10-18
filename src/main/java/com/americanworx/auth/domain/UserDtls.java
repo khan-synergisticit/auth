@@ -22,12 +22,11 @@ public class UserDtls {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String email;
-
     private String password;
-
     private String role;
+    private String accessToken;
+    private String refreshToken;
 
 
     @Override
@@ -37,7 +36,8 @@ public class UserDtls {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
+                ", accessToken='" + accessToken + '\'' +
+                ", refreshToken='" + refreshToken + '\'' +
                 '}';
     }
-
 }
