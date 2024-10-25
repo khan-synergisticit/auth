@@ -16,8 +16,6 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   application:
     name: auth
-url:
-  auth-client: 192.168.1.110
 #  security:
 #    oauth2:
 #      authorization-server:
