@@ -8,8 +8,10 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -64,6 +66,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -73,6 +76,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 
+import java.io.IOException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
@@ -138,13 +142,33 @@ public class SecurityConfig {
         http.authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/user/save", "/getPrinciple").permitAll()
                         .anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults())
+                .formLogin(login -> login.successHandler(successHandler))
                 .csrf(AbstractHttpConfigurer::disable)
                 .logout(logout -> logout.logoutSuccessUrl("/").permitAll().clearAuthentication(true).deleteCookies().invalidateHttpSession(true));
         return http.build();
     }
 
+    AuthenticationSuccessHandler successHandler = new AuthenticationSuccessHandler() {
 
+
+        @Override
+        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+            System.out.println("1: " + authentication.toString());
+            System.out.println("2: " + authentication.getPrincipal());
+            System.out.println("3: " + authentication.getCredentials());
+            System.out.println("4: " + authentication.getAuthorities());
+            System.out.println("5: " + authentication.getDetails());
+
+            System.out.println("6: " + request.getRequestURI());
+            System.out.println("7: " + request.getContextPath());
+            System.out.println("8: " + request.getServletPath());
+            System.out.println("9: " + request.getQueryString());
+            System.out.println("9.1: " + request.getSession());
+            System.out.println("10: " + response.getStatus());
+            System.out.println("11: " + response.getHeaderNames());
+            System.out.println("12: " + response.getTrailerFields());
+        }
+    };
 
     @Bean
     OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
