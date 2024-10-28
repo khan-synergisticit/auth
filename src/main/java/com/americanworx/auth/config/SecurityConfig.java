@@ -70,6 +70,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.core.GrantedAuthority;
 
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
@@ -142,6 +144,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/user/save", "/getPrinciple").permitAll()
                         .anyRequest().authenticated())
+//                .formLogin(Customizer.withDefaults())
                 .formLogin(login -> login.successHandler(successHandler))
                 .csrf(AbstractHttpConfigurer::disable)
                 .logout(logout -> logout.logoutSuccessUrl("/").permitAll().clearAuthentication(true).deleteCookies().invalidateHttpSession(true));
@@ -162,11 +165,14 @@ public class SecurityConfig {
             System.out.println("6: " + request.getRequestURI());
             System.out.println("7: " + request.getContextPath());
             System.out.println("8: " + request.getServletPath());
-            System.out.println("9: " + request.getQueryString());
             System.out.println("9.1: " + request.getSession());
             System.out.println("10: " + response.getStatus());
             System.out.println("11: " + response.getHeaderNames());
-            System.out.println("12: " + response.getTrailerFields());
+            SavedRequest savedReq = new HttpSessionRequestCache().getRequest(request, response);
+            System.out.println("12: " + savedReq.getParameterMap());
+            System.out.println("13: " + savedReq.getCookies());
+            System.out.println("14: " + savedReq.getHeaderNames());
+            System.out.println("15: " + savedReq.getRedirectUrl());
         }
     };
 
