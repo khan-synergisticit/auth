@@ -170,9 +170,10 @@ public class SecurityConfig {
             System.out.println("11: " + response.getHeaderNames());
             SavedRequest savedReq = new HttpSessionRequestCache().getRequest(request, response);
             System.out.println("12: " + savedReq.getParameterMap());
-            System.out.println("13: " + savedReq.getCookies());
+            savedReq.getCookies().forEach(cookie -> System.out.println("13: " + cookie.getName() + ", " + cookie.getValue()));
             System.out.println("14: " + savedReq.getHeaderNames());
             System.out.println("15: " + savedReq.getRedirectUrl());
+            response.sendRedirect(savedReq.getRedirectUrl());
         }
     };
 
