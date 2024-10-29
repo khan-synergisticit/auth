@@ -199,7 +199,7 @@ public class SecurityConfig {
                 .clientSecret(passwordEncoder().encode("donkey"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+//                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .redirectUri( Constants.AUTH_CLIENT_URL + ":8090/login/oauth2/code/shopping")
                 .postLogoutRedirectUri( Constants.AUTH_CLIENT_URL + ":8090/")
                 .scope(OidcScopes.OPENID)
