@@ -144,38 +144,38 @@ public class SecurityConfig {
         http.authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/user/save", "/getPrinciple").permitAll()
                         .anyRequest().authenticated())
-//                .formLogin(Customizer.withDefaults())
-                .formLogin(login -> login.successHandler(successHandler))
+               .formLogin(Customizer.withDefaults())
+               // .formLogin(login -> login.successHandler(successHandler))
                 .csrf(AbstractHttpConfigurer::disable)
                 .logout(logout -> logout.logoutSuccessUrl("/").permitAll().clearAuthentication(true).deleteCookies().invalidateHttpSession(true));
         return http.build();
     }
-
-    AuthenticationSuccessHandler successHandler = new AuthenticationSuccessHandler() {
-
-
-        @Override
-        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-            System.out.println("1: " + authentication.toString());
-            System.out.println("2: " + authentication.getPrincipal());
-            System.out.println("3: " + authentication.getCredentials());
-            System.out.println("4: " + authentication.getAuthorities());
-            System.out.println("5: " + authentication.getDetails());
-
-            System.out.println("6: " + request.getRequestURI());
-            System.out.println("7: " + request.getContextPath());
-            System.out.println("8: " + request.getServletPath());
-            System.out.println("9.1: " + request.getSession());
-            System.out.println("10: " + response.getStatus());
-            System.out.println("11: " + response.getHeaderNames());
-            SavedRequest savedReq = new HttpSessionRequestCache().getRequest(request, response);
-            System.out.println("12: " + savedReq.getParameterMap());
-            savedReq.getCookies().forEach(cookie -> System.out.println("13: " + cookie.getName() + ", " + cookie.getValue()));
-            System.out.println("14: " + savedReq.getHeaderNames());
-            System.out.println("15: " + savedReq.getRedirectUrl());
-            response.sendRedirect(savedReq.getRedirectUrl());
-        }
-    };
+//
+//    AuthenticationSuccessHandler successHandler = new AuthenticationSuccessHandler() {
+//
+//
+//        @Override
+//        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+//            System.out.println("1: " + authentication.toString());
+//            System.out.println("2: " + authentication.getPrincipal());
+//            System.out.println("3: " + authentication.getCredentials());
+//            System.out.println("4: " + authentication.getAuthorities());
+//            System.out.println("5: " + authentication.getDetails());
+//
+//            System.out.println("6: " + request.getRequestURI());
+//            System.out.println("7: " + request.getContextPath());
+//            System.out.println("8: " + request.getServletPath());
+//            System.out.println("9.1: " + request.getSession());
+//            System.out.println("10: " + response.getStatus());
+//            System.out.println("11: " + response.getHeaderNames());
+//            SavedRequest savedReq = new HttpSessionRequestCache().getRequest(request, response);
+//            System.out.println("12: " + savedReq.getParameterMap());
+//            savedReq.getCookies().forEach(cookie -> System.out.println("13: " + cookie.getName() + ", " + cookie.getValue()));
+//            System.out.println("14: " + savedReq.getHeaderNames());
+//            System.out.println("15: " + savedReq.getRedirectUrl());
+//            response.sendRedirect(savedReq.getRedirectUrl());
+//        }
+//    };
 
     @Bean
     OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
@@ -198,7 +198,6 @@ public class SecurityConfig {
                 .clientId("shopping")
                 .clientSecret(passwordEncoder().encode("donkey"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_JWT)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
