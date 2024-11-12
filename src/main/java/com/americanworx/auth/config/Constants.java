@@ -3,6 +3,6 @@ package com.americanworx.auth.config;
 import org.springframework.beans.factory.annotation.Value;
 
 public class Constants {
-    public static String AUTH_CLIENT_URL = "http://10.96.0.1";
+    public static String AUTH_CLIENT_URL = "http://10.96.0.11";
 
 }
